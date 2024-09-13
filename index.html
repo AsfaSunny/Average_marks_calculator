@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marks Average Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        *{
+            font-family: "Ubuntu", sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background-size: 400% 400%;
+            animation: gradientAnimation 10s ease infinite;
+/*            background-color: #121212;*/
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            transition: all 0.3s ease-in-out;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        input[type="number"] {
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            width: 100%;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input[type="number"]:hover {
+            border-color: #03a9f4;
+            box-shadow: 0 0 5px rgba(3, 169, 244, 0.5);
+        }
+
+        input[type="number"]:focus {
+            border-color: #ff5722;
+            box-shadow: 0 0 10px rgba(255, 87, 34, 0.7);
+            outline: none;
+        }
+
+        button {
+            background-color: #03a9f4;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            margin-top: 15px;
+            border-radius: 8px;
+            width: 100%;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #0288d1;
+        }
+
+        .result {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 18px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        /* active result */
+        .result.active {
+            border-color: #ff5722;
+            box-shadow: 0 0 10px rgba(255, 87, 34, 0.7);
+        }
+
+        .footer {
+            margin-top: 30px;
+            color: #bbb;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: #03a9f4;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer i {
+            margin-right: 8px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .footer a:hover i {
+            transform: rotate(360deg);
+        }
+
+        /* responsive design */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            input[type="number"], button {
+                font-size: 14px;
+            }
+
+            .result {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Exam Marks Average Calculator</h1>
+        <input type="number" id="subject1" placeholder="Enter marks for Subject 1" max="100" min="0">
+        <input type="number" id="subject2" placeholder="Enter marks for Subject 2" max="100" min="0">
+        <input type="number" id="subject3" placeholder="Enter marks for Subject 3" max="100" min="0">
+
+        <button onclick="calculateAverage()">Calculate Average</button>
+
+        <div id="result" class="result"></div>
+
+        <div class="footer">
+            <p>Developed and Designed by
+                <a href="https://github.com/AsfaSunny" target="_blank">
+                    <i class="fa-brands fa-github"></i>Ariful Asfake Sunny
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function calculateAverage() {
+            const subject1 = parseFloat(document.getElementById('subject1').value);
+            const subject2 = parseFloat(document.getElementById('subject2').value);
+            const subject3 = parseFloat(document.getElementById('subject3').value);
+            const resultField = document.getElementById('result');
+
+            if (isNaN(subject1) || isNaN(subject2) || isNaN(subject3)) {
+                resultField.textContent = "Please enter valid marks for all subjects.";
+                resultField.classList.remove('active');
+                return;
+            }
+
+            if (subject1 > 100 || subject2 > 100 || subject3 > 100) {
+                resultField.textContent = "Subject Marks cannot exceed 100.";
+                resultField.classList.remove('active');
+                return;
+            }
+
+            const average = (subject1 + subject2 + subject3) / 3;
+            resultField.textContent = `Average Marks: ${average.toFixed(2)}`;
+
+            resultField.classList.add('active');
+        }
+    </script>
+</body>
+</html>
